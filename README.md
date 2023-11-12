@@ -3,6 +3,7 @@ Convert WireGuard configuration to SingBox JSON format.
 
 
 # Example usage:
+```python
 wg_config_content = """
 [Interface]
 PrivateKey = ...
@@ -16,3 +17,4 @@ Endpoint = ...
 PersistentKeepalive = ...
 """
 print(wireguard_to_singbox(wg_config_content))
+```
