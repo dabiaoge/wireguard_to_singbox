@@ -1,3 +1,5 @@
+import glob
+import os
 import json
 
 def wireguard_to_singbox(wg_conf):
@@ -45,3 +47,30 @@ def wireguard_to_singbox(wg_conf):
                 sb_json["server_port"] = int(server_port)
     
     return json.dumps(sb_json, indent=4)
+
+if __name__ == '__main__':
+# Path to the directory containing .conf files
+    conf_directory = '/path/to/conf/files'  # Replace with the path to your .conf files
+
+# Get a list of all .conf files in the directory
+    conf_files = glob.glob(os.path.join(conf_directory, '*.conf'))
+
+# Loop through the list of .conf files
+    for conf_file in conf_files:
+        # Read the content of the .conf file
+        with open(conf_file, 'r') as file:
+            conf_content = file.read()
+
+        # Convert the content to JSON format
+        json_content = wireguard_to_singbox(conf_content)
+
+        # Define the JSON file name based on the .conf file name
+        json_file = f"{os.path.splitext(conf_file)[0]}.json"
+
+        # Write the JSON content to the JSON file
+        with open(json_file, 'w') as file:
+            file.write(json_content)
+        print(f"Converted '{conf_file}' to '{json_file}'")
+
+# Print completion message
+    print("Batch conversion complete.")
